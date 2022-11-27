@@ -42,6 +42,12 @@ public class ViewPrincipal extends JFrame {
 		mnCadastros.add(miIncidentes);
 		
 		JMenuItem miEnvolvidos = new JMenuItem("Envolvidos");
+		miEnvolvidos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ViewConsultaEnvolvido view = new ViewConsultaEnvolvido();
+				view.setVisible(true);
+			}
+		});
 		mnCadastros.add(miEnvolvidos);
 		
 		JMenu mnAcompanhamento = new JMenu("Acompanhamento");
