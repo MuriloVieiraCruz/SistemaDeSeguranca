@@ -10,7 +10,6 @@ import br.com.senai.core.domain.Envolvido;
 import br.com.senai.core.domain.Incidente;
 import br.com.senai.core.domain.Ocorrencia;
 
-// linha inserida a fim de teste
 public class SegurancaService {
 
 	private DaoEnvolvido daoEnvolvido;
