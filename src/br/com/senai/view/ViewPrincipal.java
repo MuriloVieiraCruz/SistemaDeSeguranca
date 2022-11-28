@@ -54,6 +54,12 @@ public class ViewPrincipal extends JFrame {
 		menuBar.add(mnAcompanhamento);
 		
 		JMenuItem miOcorrencias = new JMenuItem("Ocorr\u00EAncias");
+		miOcorrencias.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ViewConsultaOcorrencia view = new ViewConsultaOcorrencia();
+				view.setVisible(true);
+			}
+		});
 		mnAcompanhamento.add(miOcorrencias);
 		
 		JMenu mnSair = new JMenu("Sair");
