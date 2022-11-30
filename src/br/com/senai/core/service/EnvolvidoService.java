@@ -16,21 +16,11 @@ public class EnvolvidoService {
 	
 	public void salvar(Envolvido envolvido) {
 		this.validar(envolvido);
-		this.verificarDoc(envolvido);
 		boolean isJaPersistido = envolvido.getId() > 0;
 		if (isJaPersistido) {
 			this.daoEnvolvido.alterar(envolvido);
 		} else {
 			this.daoEnvolvido.inserir(envolvido);
-		}
-	}
-	
-	private void verificarDoc(Envolvido envolvido) {
-		
-		for (Envolvido envolvidos : daoEnvolvido.listarPor("")) {
-			if (envolvido.getDocumento() == envolvidos.getDocumento()) {
-				throw new IllegalArgumentException("O envolvido já está cadastrado");
-			}
 		}
 	}
 	
@@ -53,6 +43,12 @@ public class EnvolvidoService {
 			if (isDocumentoInvalida) {
 				throw new IllegalArgumentException("A descrição é "
 						+ "obrigatória e deve possuir 20 caracteres");
+			}
+			
+			Envolvido envolvidoJaSalvo = daoEnvolvido.buscarPorDocumento(envolvido.getDocumento());
+			
+			if (envolvidoJaSalvo != null && envolvidoJaSalvo.getId() != envolvido.getId()) {
+				throw new IllegalArgumentException("O documento do envolvido cadastrado já está inserido no banco");
 			}
 			
 		} else {

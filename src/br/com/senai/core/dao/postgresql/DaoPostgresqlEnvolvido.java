@@ -20,6 +20,8 @@ public class DaoPostgresqlEnvolvido implements DaoEnvolvido {
 			+ " FROM envolvidos WHERE id = ?";
 	private final String SELECT_BY_NOME = "SELECT id, nome_completo, documento"
 			+ " FROM envolvidos WHERE Upper(nome_completo) LIKE Upper(?)";
+	
+	private final String SELECT_BY_DESC = "SELECT id, nome, documento FROM envolvidos WHERE documento = ? ";
 		
 	private Connection conexao;
 	
@@ -136,7 +138,7 @@ public class DaoPostgresqlEnvolvido implements DaoEnvolvido {
 	private Envolvido extrairDo(ResultSet rs) {
 		try {
 			int id = rs.getInt("id");
-			String nomeCompleto = rs.getString("nome_completo");
+			String nomeCompleto = rs.getString("nome");
 			String documento = rs.getString("documento");
 			return new Envolvido(id, nomeCompleto, documento);
 		}catch (Exception ex) {
@@ -145,9 +147,23 @@ public class DaoPostgresqlEnvolvido implements DaoEnvolvido {
 		}
 	}
 	
+	@Override
 	public Envolvido buscarPorDocumento(String documento) {
-		//add comands
-		return null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			ps = conexao.prepareStatement(SELECT_BY_DESC);
+			ps.setString(1, documento);
+			rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				return extrairDo(rs);
+			}
+			return null;
+		} catch (Exception e) {
+			throw new RuntimeException("Ocorreu um erro ao buscar o documento do envolvido. Motivo: " + e.getMessage());
+		}
 		
 	}
 

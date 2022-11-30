@@ -11,5 +11,6 @@ public interface DaoEnvolvido {
 	public void excluirPor(int id);
 	public Envolvido buscarPor(int id);
 	public List<Envolvido> listarPor(String nomeCompleto);
+	public Envolvido buscarPorDocumento(String documento);
 
 }
